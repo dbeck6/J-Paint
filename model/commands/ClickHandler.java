@@ -7,6 +7,7 @@ public class ClickHandler implements MouseListener {
 
     // int coordinate values
     int x1, y1, x2, y2;
+
     /**
      * Invoked when the mouse button has been clicked (pressed
      * and released) on a component.

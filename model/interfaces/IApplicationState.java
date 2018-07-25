@@ -4,6 +4,7 @@ import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
 import model.StartAndEndPointMode;
+import model.shapes.ShapeConfiguration;
 
 public interface IApplicationState {
     void setActiveShape();
@@ -16,6 +17,8 @@ public interface IApplicationState {
 
     void setActiveStartAndEndPointMode();
 
+    void setActiveShapeConfiguration();
+
     ShapeType getActiveShapeType();
 
     ShapeColor getActivePrimaryColor();
@@ -25,4 +28,6 @@ public interface IApplicationState {
     ShapeShadingType getActiveShapeShadingType();
 
     StartAndEndPointMode getActiveStartAndEndPointMode();
+
+    ShapeConfiguration getCurrentShapeConfiguration();
 }

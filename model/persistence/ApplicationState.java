@@ -7,6 +7,7 @@ import model.StartAndEndPointMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
+import model.shapes.ShapeConfiguration;
 import view.interfaces.IUiModule;
 
 public class ApplicationState implements IApplicationState {
@@ -18,6 +19,8 @@ public class ApplicationState implements IApplicationState {
     private ShapeColor activeSecondaryColor;
     private ShapeShadingType activeShapeShadingType;
     private StartAndEndPointMode activeStartAndEndPointMode;
+
+    private ShapeConfiguration activeShapeConfiguration = new ShapeConfiguration();
 
     public ApplicationState(IUiModule uiModule) {
         this.uiModule = uiModule;
@@ -51,6 +54,15 @@ public class ApplicationState implements IApplicationState {
     }
 
     @Override
+    public void setActiveShapeConfiguration() {
+        activeShapeConfiguration.shapeType = uiModule.getDialogResponse(dialogProvider.getChooseShapeDialog());;
+        activeShapeConfiguration.primaryColor = uiModule.getDialogResponse(dialogProvider.getChoosePrimaryColorDialog());;
+        activeShapeConfiguration.secondaryColor = uiModule.getDialogResponse(dialogProvider.getChooseSecondaryColorDialog());;
+        activeShapeConfiguration.shapeShadingType = uiModule.getDialogResponse(dialogProvider.getChooseShadingTypeDialog());;
+    }
+
+
+    @Override
     public ShapeType getActiveShapeType() {
         return activeShapeType;
     }
@@ -75,11 +87,15 @@ public class ApplicationState implements IApplicationState {
         return activeStartAndEndPointMode;
     }
 
+    @Override
+    public ShapeConfiguration getCurrentShapeConfiguration() { return activeShapeConfiguration;  }
+
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
         activePrimaryColor = ShapeColor.BLUE;
         activeSecondaryColor = ShapeColor.GREEN;
         activeShapeShadingType = ShapeShadingType.FILLED_IN;
         activeStartAndEndPointMode = StartAndEndPointMode.DRAW;
+        setActiveShapeConfiguration();
     }
 }
