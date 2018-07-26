@@ -33,7 +33,7 @@ public class Main {
             // check application state for command
             switch (appState.getActiveStartAndEndPointMode()){
                 case DRAW:
-                    command = new DrawShapeCommand(guiWindow);
+                    command = new DrawShapeCommand(guiWindow, appState);
                     break;
                 case SELECT:
                     command = new SelectShapesCommand(guiWindow);

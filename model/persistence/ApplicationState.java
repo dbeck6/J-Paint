@@ -87,13 +87,15 @@ public class ApplicationState implements IApplicationState {
         return activeStartAndEndPointMode;
     }
 
-    @Override
+    /*@Override
     public ShapeConfiguration getCurrentShapeConfiguration(ShapeConfiguration activeShapeConfiguration) {
         activeShapeConfiguration.shapeType = uiModule.getDialogResponse(dialogProvider.getChooseShapeDialog());
         activeShapeConfiguration.primaryColor = uiModule.getDialogResponse(dialogProvider.getChoosePrimaryColorDialog());
         activeShapeConfiguration.secondaryColor = uiModule.getDialogResponse(dialogProvider.getChooseSecondaryColorDialog());
         activeShapeConfiguration.shapeShadingType = uiModule.getDialogResponse(dialogProvider.getChooseShadingTypeDialog());
-        return activeShapeConfiguration;  }
+        return activeShapeConfiguration;  }*/
+    @Override
+    public ShapeConfiguration getCurrentShapeConfiguration() { return activeShapeConfiguration;  }
 
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
