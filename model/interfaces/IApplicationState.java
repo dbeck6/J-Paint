@@ -17,8 +17,6 @@ public interface IApplicationState {
 
     void setActiveStartAndEndPointMode();
 
-    void setActiveShapeConfiguration();
-
     ShapeType getActiveShapeType();
 
     ShapeColor getActivePrimaryColor();
@@ -29,6 +27,5 @@ public interface IApplicationState {
 
     StartAndEndPointMode getActiveStartAndEndPointMode();
 
-    //ShapeConfiguration getCurrentShapeConfiguration(ShapeConfiguration shapeConfiguration);
-    ShapeConfiguration getCurrentShapeConfiguration();
+    ShapeConfiguration getCurrentShapeConfiguration(ShapeConfiguration shapeConfiguration);
 }

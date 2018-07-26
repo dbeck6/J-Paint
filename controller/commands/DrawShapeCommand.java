@@ -11,22 +11,23 @@ import java.io.IOException;
 public class DrawShapeCommand implements ICommand, IUndoable {
 
     private IGuiWindow guiWindow;
+    private IApplicationState appState;
 
-    public ShapeConfiguration shapeConfiguration = new ShapeConfiguration();
+    private ShapeConfiguration shapeConfiguration = new ShapeConfiguration();
 
 
-    public DrawShapeCommand(IGuiWindow guiWindow) {
+    public DrawShapeCommand(IGuiWindow guiWindow, IApplicationState appState) {
         this.guiWindow = guiWindow;
+        this.appState = appState;
     }
-
-    /*public void setShapeCon (ShapeConfiguration shape){
-        shape = IApplicationState.setActiveShapeConfiguration();
-    }*/
 
     @Override
     public void run() throws IOException {
-        IApplicationState.getCurrentShapeConfiguration(shapeConfiguration);
+        appState.getCurrentShapeConfiguration(shapeConfiguration);
         System.out.println("Made it to DrawShape Command");
+        System.out.println(shapeConfiguration.primaryColor);
+
+
         // add command to CommandHistory
         CommandHistory.add(this);
     }

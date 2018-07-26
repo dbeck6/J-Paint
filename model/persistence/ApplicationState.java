@@ -20,8 +20,6 @@ public class ApplicationState implements IApplicationState {
     private ShapeShadingType activeShapeShadingType;
     private StartAndEndPointMode activeStartAndEndPointMode;
 
-    private ShapeConfiguration activeShapeConfiguration = new ShapeConfiguration();
-
     public ApplicationState(IUiModule uiModule) {
         this.uiModule = uiModule;
         this.dialogProvider = new DialogProvider(this);
@@ -53,14 +51,6 @@ public class ApplicationState implements IApplicationState {
         activeStartAndEndPointMode = uiModule.getDialogResponse(dialogProvider.getChooseStartAndEndPointModeDialog());
     }
 
-    @Override
-    public void setActiveShapeConfiguration() {
-        activeShapeConfiguration.shapeType = uiModule.getDialogResponse(dialogProvider.getChooseShapeDialog());;
-        activeShapeConfiguration.primaryColor = uiModule.getDialogResponse(dialogProvider.getChoosePrimaryColorDialog());;
-        activeShapeConfiguration.secondaryColor = uiModule.getDialogResponse(dialogProvider.getChooseSecondaryColorDialog());;
-        activeShapeConfiguration.shapeShadingType = uiModule.getDialogResponse(dialogProvider.getChooseShadingTypeDialog());;
-    }
-
 
     @Override
     public ShapeType getActiveShapeType() {
@@ -87,15 +77,14 @@ public class ApplicationState implements IApplicationState {
         return activeStartAndEndPointMode;
     }
 
-    /*@Override
-    public ShapeConfiguration getCurrentShapeConfiguration(ShapeConfiguration activeShapeConfiguration) {
-        activeShapeConfiguration.shapeType = uiModule.getDialogResponse(dialogProvider.getChooseShapeDialog());
-        activeShapeConfiguration.primaryColor = uiModule.getDialogResponse(dialogProvider.getChoosePrimaryColorDialog());
-        activeShapeConfiguration.secondaryColor = uiModule.getDialogResponse(dialogProvider.getChooseSecondaryColorDialog());
-        activeShapeConfiguration.shapeShadingType = uiModule.getDialogResponse(dialogProvider.getChooseShadingTypeDialog());
-        return activeShapeConfiguration;  }*/
     @Override
-    public ShapeConfiguration getCurrentShapeConfiguration() { return activeShapeConfiguration;  }
+    public ShapeConfiguration getCurrentShapeConfiguration(ShapeConfiguration activeShapeConfiguration) {
+        activeShapeConfiguration.shapeType = activeShapeType;
+        activeShapeConfiguration.primaryColor = activePrimaryColor;
+        activeShapeConfiguration.secondaryColor = activeSecondaryColor;
+        activeShapeConfiguration.shapeShadingType = activeShapeShadingType;
+        return activeShapeConfiguration;
+    }
 
     private void setDefaults() {
         activeShapeType = ShapeType.ELLIPSE;
@@ -103,6 +92,5 @@ public class ApplicationState implements IApplicationState {
         activeSecondaryColor = ShapeColor.GREEN;
         activeShapeShadingType = ShapeShadingType.FILLED_IN;
         activeStartAndEndPointMode = StartAndEndPointMode.DRAW;
-        setActiveShapeConfiguration();
     }
 }
