@@ -1,4 +1,4 @@
-package model.commands;
+package controller.commands;
 
 import model.interfaces.IApplicationState;
 import model.interfaces.ICommand;
@@ -19,9 +19,13 @@ public class DrawShapeCommand implements ICommand, IUndoable {
         this.guiWindow = guiWindow;
     }
 
+    /*public void setShapeCon (ShapeConfiguration shape){
+        shape = IApplicationState.setActiveShapeConfiguration();
+    }*/
+
     @Override
     public void run() throws IOException {
-        shapeConfiguration = IApplicationState.getCurrentShapeConfiguration();
+        IApplicationState.getCurrentShapeConfiguration(shapeConfiguration);
         System.out.println("Made it to DrawShape Command");
         // add command to CommandHistory
         CommandHistory.add(this);

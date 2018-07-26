@@ -1,13 +1,14 @@
-package model.commands;
+package controller.commands;
 
 import model.interfaces.ICommand;
+
 import java.io.IOException;
 
-public class RedoCommand implements ICommand {
+public class UndoCommand implements ICommand {
 
     @Override
     public void run() throws IOException {
-        CommandHistory.redo();
+        CommandHistory.undo();
     }
 
 }

@@ -2,10 +2,10 @@ package main;
 
 import controller.IJPaintController;
 import controller.JPaintController;
-import model.commands.ClickHandler;
-import model.commands.DrawShapeCommand;
-import model.commands.MoveShapesCommand;
-import model.commands.SelectShapesCommand;
+import controller.commands.ClickHandler;
+import controller.commands.DrawShapeCommand;
+import controller.commands.MoveShapesCommand;
+import controller.commands.SelectShapesCommand;
 import model.interfaces.ICommand;
 import model.persistence.ApplicationState;
 import view.gui.Gui;

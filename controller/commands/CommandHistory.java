@@ -1,4 +1,4 @@
-package model.commands;
+package controller.commands;
 
 import model.interfaces.IUndoable;
 

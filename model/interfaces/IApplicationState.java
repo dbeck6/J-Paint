@@ -29,5 +29,5 @@ public interface IApplicationState {
 
     StartAndEndPointMode getActiveStartAndEndPointMode();
 
-    ShapeConfiguration getCurrentShapeConfiguration();
+    ShapeConfiguration getCurrentShapeConfiguration(ShapeConfiguration shapeConfiguration);
 }
