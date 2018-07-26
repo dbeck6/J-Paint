@@ -24,8 +24,8 @@ public class DrawShapeCommand implements ICommand, IUndoable {
     @Override
     public void run() throws IOException {
         appState.getCurrentShapeConfiguration(shapeConfiguration);
-        System.out.println("Made it to DrawShape Command");
-        System.out.println(shapeConfiguration.primaryColor);
+       /* System.out.println("Made it to DrawShape Command");
+        System.out.println(shapeConfiguration.primaryColor);*/
 
 
         // add command to CommandHistory

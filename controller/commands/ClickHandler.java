@@ -38,8 +38,8 @@ public class ClickHandler implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         x2 = e.getX(); y2 = e.getY();
-        System.out.println(x1 + ", " + y1);
-        System.out.println(x2 + ", " + y2);
+     //   System.out.println(x1 + ", " + y1);
+     //   System.out.println(x2 + ", " + y2);
     }
 
     /**
