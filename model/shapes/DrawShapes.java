@@ -1,19 +1,21 @@
 package model.shapes;
 
-import model.interfaces.IDrawShapesStrategy;
+import controller.commands.ClickHandler;
+import view.interfaces.IGuiWindow;
 
-import java.awt.*;
+import java.util.LinkedList;
 
-public class DrawShapes implements IDrawShapesStrategy {
+public class DrawShapes extends ClickHandler {
 
-    // can i extends ClickHandler here???
-    /*@Override
-    public int drawShapes(int x1, int y1, int x2, int y2) {
-        return 0;
-    }*/
+    private LinkedList<DrawShapes> shapes = new LinkedList<>();
+    // maybe a clickHandler saved here??
+    private ClickHandler c;
+    private IGuiWindow g;
 
-    @Override
-    public void drawShapes(Graphics2D g, ShapeConfiguration s) {
-
+    public DrawShapes(ClickHandler c, IGuiWindow g){
+        this.c = c;
+        this.g = g;
     }
+
+    // some kind of while loop evaluates if a shape has been created or null?
 }
