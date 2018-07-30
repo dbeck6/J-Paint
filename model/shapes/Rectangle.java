@@ -4,11 +4,12 @@ import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
 import model.interfaces.IDrawShapesStrategy;
-import view.interfaces.IGuiWindow;
+
+import java.awt.*;
 
 public class Rectangle implements IDrawShapesStrategy {
 
-    private IGuiWindow guiWindow;
+    private Graphics2D graphics;
     private ShapeConfiguration shapeConfiguration;
 
     private ShapeType rectangle;
@@ -16,18 +17,23 @@ public class Rectangle implements IDrawShapesStrategy {
     private ShapeColor secondary;
     private ShapeShadingType shade;
 
-    public Rectangle(IGuiWindow guiWindow, ShapeConfiguration shapeConfiguration){
-        this.guiWindow = guiWindow;
+    private Point start, end;
+
+    public Rectangle(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end){
+        this.graphics = graphics;
         this.shapeConfiguration = shapeConfiguration;
         this.rectangle = shapeConfiguration.shapeType;
         this.primary = shapeConfiguration.primaryColor;
         this.secondary = shapeConfiguration.secondaryColor;
         this.shade = shapeConfiguration.shapeShadingType;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     public void drawShapes() {
-
+        //graphics.setColor(primary);
+        //graphics.fillRect()
     }
 
     /*@Override

@@ -14,14 +14,15 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        IGuiWindow guiWindow = new GuiWindow(new PaintCanvas());
+        PaintCanvas canvas = new PaintCanvas();
+        IGuiWindow guiWindow = new GuiWindow(canvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
 
         //testing ClickHandler
-        ((GuiWindow) guiWindow).addMouseListener(new ClickHandler(guiWindow, appState));
+        ((GuiWindow) guiWindow).addMouseListener(new ClickHandler(canvas, appState));
 
         }
 }

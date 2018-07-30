@@ -4,11 +4,12 @@ import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
 import model.interfaces.IDrawShapesStrategy;
-import view.interfaces.IGuiWindow;
+
+import java.awt.*;
 
 public class Ellipse implements IDrawShapesStrategy {
 
-    private IGuiWindow guiWindow;
+    private Graphics2D graphics;
     private ShapeConfiguration shapeConfiguration;
 
     private ShapeType ellipse;
@@ -16,13 +17,17 @@ public class Ellipse implements IDrawShapesStrategy {
     private ShapeColor secondary;
     private ShapeShadingType shade;
 
-    public Ellipse(IGuiWindow guiWindow, ShapeConfiguration shapeConfiguration){
-        this.guiWindow = guiWindow;
+    private Point start, end;
+
+    public Ellipse(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end){
+        this.graphics = graphics;
         this.shapeConfiguration = shapeConfiguration;
         this.ellipse = shapeConfiguration.shapeType;
         this.primary = shapeConfiguration.primaryColor;
         this.secondary = shapeConfiguration.secondaryColor;
         this.shade = shapeConfiguration.shapeShadingType;
+        this.start = start;
+        this.end = end;
     }
 
     @Override

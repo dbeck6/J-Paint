@@ -2,16 +2,16 @@ package controller.commands;
 
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
-import view.interfaces.IGuiWindow;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class SelectShapesCommand implements ICommand, IUndoable {
 
-    private IGuiWindow guiWindow;
+    private Graphics2D graphics;
 
-    public SelectShapesCommand(IGuiWindow guiWindow){
-        this.guiWindow = guiWindow;
+    public SelectShapesCommand(Graphics2D graphics){
+        this.graphics = graphics;
     }
     @Override
     public void run() throws IOException {

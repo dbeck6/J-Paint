@@ -2,16 +2,16 @@ package controller.commands;
 
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
-import view.interfaces.IGuiWindow;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class MoveShapesCommand implements ICommand, IUndoable {
 
-    private IGuiWindow guiWindow;
+    private Graphics2D graphics;
 
-    public MoveShapesCommand(IGuiWindow guiWindow) {
-        this.guiWindow = guiWindow;
+    public MoveShapesCommand(Graphics2D graphics) {
+        this.graphics = graphics;
     }
 
     @Override
