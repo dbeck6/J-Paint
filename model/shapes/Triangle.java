@@ -8,25 +8,21 @@ import view.interfaces.IGuiWindow;
 
 public class Triangle implements IDrawShapesStrategy {
 
-    private IGuiWindow g;
-    private ShapeConfiguration s;
+    private IGuiWindow guiWindow;
+    private ShapeConfiguration shapeConfiguration;
 
     private ShapeType triangle;
     private ShapeColor primary;
     private ShapeColor secondary;
     private ShapeShadingType shade;
 
-    public Triangle(IGuiWindow g, ShapeConfiguration s){
-        this.g = g;
-        this.s = s;
-    }
-
-    @Override
-    public void getParameters() {
-        triangle = s.shapeType;
-        primary = s.primaryColor;
-        secondary = s.secondaryColor;
-        shade = s.shapeShadingType;
+    public Triangle(IGuiWindow guiWindow, ShapeConfiguration shapeConfiguration){
+        this.guiWindow = guiWindow;
+        this.shapeConfiguration = shapeConfiguration;
+        this.triangle = shapeConfiguration.shapeType;
+        this.primary = shapeConfiguration.primaryColor;
+        this.secondary = shapeConfiguration.secondaryColor;
+        this.shade = shapeConfiguration.shapeShadingType;
     }
 
     @Override

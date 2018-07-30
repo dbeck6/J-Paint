@@ -6,19 +6,23 @@ import model.interfaces.IUndoable;
 import model.shapes.ShapeConfiguration;
 import view.interfaces.IGuiWindow;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class DrawShapeCommand implements ICommand, IUndoable {
 
     private IGuiWindow guiWindow;
     private IApplicationState appState;
+    private Point start, end;
 
     private ShapeConfiguration shapeConfiguration = new ShapeConfiguration();
 
 
-    public DrawShapeCommand(IGuiWindow guiWindow, IApplicationState appState) {
+    public DrawShapeCommand(IGuiWindow guiWindow, IApplicationState appState, Point start, Point end) {
         this.guiWindow = guiWindow;
         this.appState = appState;
+        this.start = start;
+        this.end = end;
     }
 
     @Override

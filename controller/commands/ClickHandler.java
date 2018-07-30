@@ -1,12 +1,29 @@
 package controller.commands;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import model.interfaces.IApplicationState;
+import model.interfaces.ICommand;
+import model.interfaces.IDrawShapesStrategy;
+import view.interfaces.IGuiWindow;
 
-public class ClickHandler implements MouseListener {
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.List;
+
+public class ClickHandler extends MouseAdapter {
 
     // int coordinate values
-    int x1, y1, x2, y2;
+    private IGuiWindow guiWindow;
+    private IApplicationState appState;
+    private Point start, end;
+    private ICommand command;
+    private List<IDrawShapesStrategy> shapes;
+
+    public ClickHandler(IGuiWindow guiWindow, IApplicationState appState){
+        this.guiWindow = guiWindow;
+        this.appState = appState;
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -16,15 +33,31 @@ public class ClickHandler implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        x1 = e.getX(); y1 = e.getY();
-        //System.out.println(x1 + ", " + y1);
+        this.start = new Point(e.getX(), e.getY());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        x2 = e.getX(); y2 = e.getY();
-     //   System.out.println(x1 + ", " + y1);
-     //   System.out.println(x2 + ", " + y2);
+        this.end = new Point(e.getX(), e.getY());
+
+        switch (appState.getActiveStartAndEndPointMode()){
+            case DRAW:
+                command = new DrawShapeCommand(guiWindow, appState, start, end);
+                break;
+            case SELECT:
+                command = new SelectShapesCommand(guiWindow);
+                break;
+            case MOVE:
+                command = new MoveShapesCommand(guiWindow);
+                break;
+            default:
+                throw new Error();
+        }
+        try {
+            command.run();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
     @Override

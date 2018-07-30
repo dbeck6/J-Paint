@@ -8,25 +8,21 @@ import view.interfaces.IGuiWindow;
 
 public class Ellipse implements IDrawShapesStrategy {
 
-    private IGuiWindow g;
-    private ShapeConfiguration s;
+    private IGuiWindow guiWindow;
+    private ShapeConfiguration shapeConfiguration;
 
     private ShapeType ellipse;
     private ShapeColor primary;
     private ShapeColor secondary;
     private ShapeShadingType shade;
 
-    public Ellipse(IGuiWindow g, ShapeConfiguration s){
-        this.g = g;
-        this.s = s;
-    }
-
-    @Override
-    public void getParameters() {
-        ellipse = s.shapeType;
-        primary = s.primaryColor;
-        secondary = s.secondaryColor;
-        shade = s.shapeShadingType;
+    public Ellipse(IGuiWindow guiWindow, ShapeConfiguration shapeConfiguration){
+        this.guiWindow = guiWindow;
+        this.shapeConfiguration = shapeConfiguration;
+        this.ellipse = shapeConfiguration.shapeType;
+        this.primary = shapeConfiguration.primaryColor;
+        this.secondary = shapeConfiguration.secondaryColor;
+        this.shade = shapeConfiguration.shapeShadingType;
     }
 
     @Override
