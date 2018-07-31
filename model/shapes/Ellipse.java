@@ -17,7 +17,7 @@ public class Ellipse implements IDrawShapesStrategy {
     private ShapeColor secondary;
     private ShapeShadingType shade;
 
-    private Point start, end;
+    private int x, y, width, height;
 
     public Ellipse(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end){
         this.graphics = graphics;
@@ -26,12 +26,18 @@ public class Ellipse implements IDrawShapesStrategy {
         this.primary = shapeConfiguration.primaryColor;
         this.secondary = shapeConfiguration.secondaryColor;
         this.shade = shapeConfiguration.shapeShadingType;
-        this.start = start;
-        this.end = end;
+        this.x = Math.min(start.x, end.x);
+        this.y = Math.min(start.y, end.y);
+        this.width = Math.abs(start.x - end.x);
+        this.height = Math.abs(start.y - end.y);
     }
 
     @Override
     public void drawShapes() {
-
+        graphics.setColor(Color.red); //primary
+        graphics.fillOval(x, y, width, height);
+        graphics.setStroke(new BasicStroke(5));
+        graphics.setColor(Color.black); // secondary
+        graphics.drawOval(x, y, width, height);
     }
 }

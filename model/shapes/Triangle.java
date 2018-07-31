@@ -17,7 +17,8 @@ public class Triangle implements IDrawShapesStrategy {
     private ShapeColor secondary;
     private ShapeShadingType shade;
 
-    private Point start, end;
+    private int[] x, y;
+    private final int points = 3;
 
     public Triangle(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end){
         this.graphics = graphics;
@@ -26,12 +27,16 @@ public class Triangle implements IDrawShapesStrategy {
         this.primary = shapeConfiguration.primaryColor;
         this.secondary = shapeConfiguration.secondaryColor;
         this.shade = shapeConfiguration.shapeShadingType;
-        this.start = start;
-        this.end = end;
+        this.x = new int[]{start.x, ((start.x + end.x)/2), end.x};
+        this.y = new int[]{end.y, start.y, end.y};
     }
 
     @Override
     public void drawShapes() {
-
+        graphics.setColor(Color.red); //primary
+        graphics.fillPolygon(x, y, points);
+        graphics.setStroke(new BasicStroke(5));
+        graphics.setColor(Color.black); // secondary
+        graphics.drawPolygon(x, y, points);
     }
 }

@@ -22,7 +22,7 @@ public class Main {
         controller.setup();
 
         //testing ClickHandler
-        ((GuiWindow) guiWindow).addMouseListener(new ClickHandler(canvas, appState));
+        (canvas).addMouseListener(new ClickHandler(canvas, appState));
 
         }
 }
