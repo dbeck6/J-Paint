@@ -38,9 +38,13 @@ public class Triangle implements IDrawShapesStrategy {
     @Override
     public void drawShapes() {
         graphics.setColor(shapeColorMap.get(shapeConfiguration.primaryColor)); //primary
-        graphics.fillPolygon(x, y, points);
+        if(shade == ShapeShadingType.FILLED_IN || shade == ShapeShadingType.OUTLINE_AND_FILLED_IN) {
+            graphics.fillPolygon(x, y, points);
+        }
         graphics.setStroke(new BasicStroke(5));
         graphics.setColor(shapeColorMap.get(shapeConfiguration.secondaryColor)); // secondary
-        graphics.drawPolygon(x, y, points);
+        if(shade == ShapeShadingType.OUTLINE || shade == ShapeShadingType.OUTLINE_AND_FILLED_IN) {
+            graphics.drawPolygon(x, y, points);
+        }
     }
 }

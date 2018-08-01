@@ -51,6 +51,13 @@ public class ApplicationState implements IApplicationState {
         activeStartAndEndPointMode = uiModule.getDialogResponse(dialogProvider.getChooseStartAndEndPointModeDialog());
     }
 
+    @Override
+    public void setInverseColors() {
+        ShapeColor temp = activePrimaryColor;
+        activePrimaryColor = activeSecondaryColor;
+        activeSecondaryColor = temp;
+    }
+
 
     @Override
     public ShapeType getActiveShapeType() {
