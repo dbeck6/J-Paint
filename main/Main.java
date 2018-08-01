@@ -20,9 +20,7 @@ public class Main {
         ApplicationState appState = new ApplicationState(uiModule);
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
-
-        //testing ClickHandler
+        // connect ClickHandler to canvas
         (canvas).addMouseListener(new ClickHandler(canvas, appState));
-
         }
 }

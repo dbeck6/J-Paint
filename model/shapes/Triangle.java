@@ -1,6 +1,7 @@
 package model.shapes;
 
 import model.ShapeColor;
+import model.ShapeColorMap;
 import model.ShapeShadingType;
 import model.ShapeType;
 import model.interfaces.IDrawShapesStrategy;
@@ -16,6 +17,9 @@ public class Triangle implements IDrawShapesStrategy {
     private ShapeColor primary;
     private ShapeColor secondary;
     private ShapeShadingType shade;
+
+    //creates Singleton shapeColorMap object if not already created
+    ShapeColorMap shapeColorMap = ShapeColorMap.getInstance();
 
     private int[] x, y;
     private final int points = 3;
@@ -33,10 +37,10 @@ public class Triangle implements IDrawShapesStrategy {
 
     @Override
     public void drawShapes() {
-        graphics.setColor(Color.red); //primary
+        graphics.setColor(shapeColorMap.get(shapeConfiguration.primaryColor)); //primary
         graphics.fillPolygon(x, y, points);
         graphics.setStroke(new BasicStroke(5));
-        graphics.setColor(Color.black); // secondary
+        graphics.setColor(shapeColorMap.get(shapeConfiguration.secondaryColor)); // secondary
         graphics.drawPolygon(x, y, points);
     }
 }
