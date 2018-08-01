@@ -19,9 +19,11 @@ public class ClickHandler extends MouseAdapter {
     private Point start, end;
     private ICommand command;
 
+    private boolean rightClick = false;
+
     private ArrayList<IDrawShapesStrategy> shapes = new ArrayList<>();
 
-    public ClickHandler(PaintCanvas canvas, IApplicationState appState){
+    public ClickHandler(PaintCanvas canvas, IApplicationState appState) throws IOException {
         this.canvas = canvas;
         this.appState = appState;
     }
@@ -33,7 +35,18 @@ public class ClickHandler extends MouseAdapter {
 
 
     @Override
-    public void mousePressed(MouseEvent e) { this.start = new Point(e.getX(), e.getY());  }
+    public void mousePressed(MouseEvent e) {
+        // check if right mouse button was used to inverse colors
+        if(e.getButton() == MouseEvent.BUTTON3 && rightClick == false) {
+            // inverse the colors...
+            appState.setInverseColors();
+            rightClick = true;
+        // set them back to original selection if left click was used after right click
+        } else if(e.getButton() == MouseEvent.BUTTON1 && rightClick == true){
+            appState.setInverseColors();
+            rightClick = false;
+        }
+        this.start = new Point(e.getX(), e.getY());  }
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -42,12 +55,7 @@ public class ClickHandler extends MouseAdapter {
 
         switch (appState.getActiveStartAndEndPointMode()){
             case DRAW:
-                // check if right mouse was used to inverse colors
-                if(e.getButton() == MouseEvent.BUTTON3){
-                    appState.setInverseColors();
-                    command = new DrawShapeCommand(canvas.getGraphics2D(), appState, shapes, start, end);
-                }
-                else command = new DrawShapeCommand(canvas.getGraphics2D(), appState, shapes, start, end);
+                command = new DrawShapeCommand(canvas.getGraphics2D(), appState, shapes, start, end);
                 break;
             case SELECT:
                 command = new SelectShapesCommand(canvas.getGraphics2D());

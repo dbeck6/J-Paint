@@ -29,7 +29,7 @@ public final class ShapeColorMap {
             colorMap.put(ShapeColor.WHITE, Color.WHITE);
             colorMap.put(ShapeColor.YELLOW, Color.YELLOW);
             // testing Singleton
-            System.out.println("Singleton Color Map Created");
+            //System.out.println("Singleton Color Map Created");
         }
         return shapeColorMap;
     }
