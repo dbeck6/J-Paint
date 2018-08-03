@@ -1,6 +1,7 @@
 package model.interfaces;
 
-public interface IDrawShapesStrategy {
+import java.awt.*;
 
+public interface IDrawShapesStrategy extends Shape {
     void drawShapes();
 }

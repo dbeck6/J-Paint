@@ -8,7 +8,7 @@ import model.interfaces.IDrawShapesStrategy;
 
 import java.awt.*;
 
-public class Triangle implements IDrawShapesStrategy {
+public class Triangle extends Polygon implements IDrawShapesStrategy {
 
     private Graphics2D graphics;
     private ShapeConfiguration shapeConfiguration;

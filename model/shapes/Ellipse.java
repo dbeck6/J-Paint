@@ -7,8 +7,9 @@ import model.ShapeType;
 import model.interfaces.IDrawShapesStrategy;
 
 import java.awt.*;
+import java.awt.Rectangle;
 
-public class Ellipse implements IDrawShapesStrategy {
+public class Ellipse extends Rectangle implements IDrawShapesStrategy {
 
     private Graphics2D graphics;
     private ShapeConfiguration shapeConfiguration;

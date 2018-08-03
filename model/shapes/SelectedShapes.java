@@ -4,10 +4,11 @@ import model.interfaces.IDrawShapesStrategy;
 import model.interfaces.ISelectShapeIterator;
 
 import java.awt.*;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class SelectedShapes implements ISelectShapeIterator {
+public class SelectedShapes extends Rectangle implements ISelectShapeIterator {
 
     private ArrayList<IDrawShapesStrategy> selectedShapes;
 

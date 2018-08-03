@@ -8,7 +8,7 @@ import model.interfaces.IDrawShapesStrategy;
 
 import java.awt.*;
 
-public class Rectangle implements IDrawShapesStrategy {
+public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy {
 
     private Graphics2D graphics;
     private ShapeConfiguration shapeConfiguration;
