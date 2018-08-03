@@ -52,16 +52,15 @@ public class ClickHandler extends MouseAdapter {
     public void mouseReleased(MouseEvent e) {
         this.end = new Point(e.getX(), e.getY());
 
-
         switch (appState.getActiveStartAndEndPointMode()){
             case DRAW:
                 command = new DrawShapeCommand(canvas.getGraphics2D(), appState, shapes, start, end);
                 break;
             case SELECT:
-                command = new SelectShapesCommand(canvas.getGraphics2D());
+                command = new SelectShapesCommand(canvas.getGraphics2D(), shapes, start, end);
                 break;
             case MOVE:
-                command = new MoveShapesCommand(canvas.getGraphics2D());
+                command = new MoveShapesCommand(canvas.getGraphics2D(), shapes, start, end);
                 break;
             default:
                 throw new Error();
