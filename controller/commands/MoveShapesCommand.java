@@ -1,22 +1,21 @@
 package controller.commands;
 
 import model.interfaces.ICommand;
-import model.interfaces.IDrawShapesStrategy;
 import model.interfaces.IUndoable;
+import model.shapes.SelectedShapes;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MoveShapesCommand implements ICommand, IUndoable {
 
     private Graphics2D graphics;
-    private ArrayList<IDrawShapesStrategy> shapes;
+    private SelectedShapes selectedShapes;
     private Point start, end;
 
-    public MoveShapesCommand(Graphics2D graphics, ArrayList<IDrawShapesStrategy> shapes, Point start, Point end) {
+    public MoveShapesCommand(Graphics2D graphics, SelectedShapes selectedShapes, Point start, Point end) {
         this.graphics = graphics;
-        this.shapes = shapes;
+        this.selectedShapes = selectedShapes;
         this.start = start;
         this.end = end;
     }
