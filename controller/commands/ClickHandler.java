@@ -2,7 +2,6 @@ package controller.commands;
 
 import model.interfaces.IApplicationState;
 import model.interfaces.ICommand;
-import model.interfaces.IDrawShapesStrategy;
 import model.shapes.SelectedShapes;
 import view.gui.PaintCanvas;
 
@@ -22,7 +21,7 @@ public class ClickHandler extends MouseAdapter {
 
     private boolean rightClick = false;
 
-    private ArrayList<IDrawShapesStrategy> shapes = new ArrayList<>();
+    private ArrayList<Shape> shapes = new ArrayList<>();
     private SelectedShapes selectedShapes = new SelectedShapes();
 
     public ClickHandler(PaintCanvas canvas, IApplicationState appState){
@@ -59,7 +58,7 @@ public class ClickHandler extends MouseAdapter {
                 command = new DrawShapeCommand(canvas.getGraphics2D(), appState, shapes, start, end);
                 break;
             case SELECT:
-                command = new SelectShapesCommand(canvas.getGraphics2D(), selectedShapes, start, end);
+                command = new SelectShapesCommand(canvas.getGraphics2D(), shapes, selectedShapes, start, end);
                 break;
             case MOVE:
                 command = new MoveShapesCommand(canvas.getGraphics2D(), selectedShapes, start, end);

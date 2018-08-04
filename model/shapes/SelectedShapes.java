@@ -1,6 +1,5 @@
 package model.shapes;
 
-import model.interfaces.IDrawShapesStrategy;
 import model.interfaces.ISelectShapeIterator;
 
 import java.awt.*;
@@ -10,25 +9,28 @@ import java.util.Iterator;
 
 public class SelectedShapes extends Rectangle implements ISelectShapeIterator {
 
-    private ArrayList<IDrawShapesStrategy> selectedShapes;
+    private ArrayList<Shape> selectedShapes;
 
     public SelectedShapes(){
         selectedShapes = new ArrayList<>();
     }
 
-    public void addShapes(ArrayList<IDrawShapesStrategy> shapes, Point start, Point end){
-        double x = Math.min(start.x, end.x);
-        double y = Math.min(start.y, end.y);
-        double width = Math.abs(start.x - end.x);
-        double height = Math.abs(start.y - end.y);
-        for(IDrawShapesStrategy shape: shapes){
-            if (shape.intersects(x, y, width, height)){
+    public void addShapes(ArrayList<Shape> shapes, Point start, Point end){
+        int x = Math.min(start.x, end.x);
+        int y = Math.min(start.y, end.y);
+        int width = Math.abs(start.x - end.x);
+        int height = Math.abs(start.y - end.y);
+        Rectangle rect = new Rectangle(x, y, width, height);
+        for(Shape shape: shapes){
+            if (rect.getBounds().intersects(shape.getBounds())){
                 selectedShapes.add(shape);
+               /* System.out.println("Collected shape");
+                System.out.println(selectedShapes.toString());*/
             }
         }
     }
 
-    public ArrayList<IDrawShapesStrategy> getSelectedShapes(){
+    public ArrayList<Shape> getSelectedShapes(){
         return selectedShapes;
     }
 
@@ -37,7 +39,7 @@ public class SelectedShapes extends Rectangle implements ISelectShapeIterator {
     }
 
     @Override
-    public Iterator<IDrawShapesStrategy> createIterator() {
+    public Iterator<Shape> createIterator() {
         return selectedShapes.iterator();
     }
 }

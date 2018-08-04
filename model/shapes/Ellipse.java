@@ -8,10 +8,12 @@ import model.interfaces.IDrawShapesStrategy;
 
 import java.awt.*;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public class Ellipse extends Rectangle implements IDrawShapesStrategy {
 
     private Graphics2D graphics;
+    private ArrayList<Shape> shapes;
     private ShapeConfiguration shapeConfiguration;
 
     private ShapeType ellipse;
@@ -24,8 +26,9 @@ public class Ellipse extends Rectangle implements IDrawShapesStrategy {
 
     private int x, y, width, height;
 
-    public Ellipse(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end){
+    public Ellipse(Graphics2D graphics, ArrayList<Shape> shapes, ShapeConfiguration shapeConfiguration, Point start, Point end){
         this.graphics = graphics;
+        this.shapes = shapes;
         this.shapeConfiguration = shapeConfiguration;
         this.ellipse = shapeConfiguration.shapeType;
         this.primary = shapeConfiguration.primaryColor;
@@ -39,14 +42,18 @@ public class Ellipse extends Rectangle implements IDrawShapesStrategy {
 
     @Override
     public void drawShapes() {
-        graphics.setColor(shapeColorMap.get(shapeConfiguration.primaryColor)); //primary
+        graphics.setColor(shapeColorMap.get(primary)); //primary
         if(shade == ShapeShadingType.FILLED_IN || shade == ShapeShadingType.OUTLINE_AND_FILLED_IN) {
             graphics.fillOval(x, y, width, height);
+            Rectangle ellipse = new Rectangle(x, y, width, height);
+            shapes.add(ellipse);
         }
         graphics.setStroke(new BasicStroke(5));
-        graphics.setColor(shapeColorMap.get(shapeConfiguration.secondaryColor)); // secondary
+        graphics.setColor(shapeColorMap.get(secondary)); // secondary
         if(shade == ShapeShadingType.OUTLINE || shade == ShapeShadingType.OUTLINE_AND_FILLED_IN) {
             graphics.drawOval(x, y, width, height);
+            Rectangle ellipse = new Rectangle(x, y, width, height);
+            shapes.add(ellipse);
         }
     }
 }

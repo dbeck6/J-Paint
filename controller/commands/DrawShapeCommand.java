@@ -20,10 +20,10 @@ public class DrawShapeCommand implements ICommand, IUndoable {
     private IApplicationState appState;
     private Point start, end;
     private ShapeConfiguration shapeConfiguration = new ShapeConfiguration();
-    private ArrayList<IDrawShapesStrategy> shapes;
+    private ArrayList<Shape> shapes;
 
 
-    public DrawShapeCommand(Graphics2D graphics, IApplicationState appState, ArrayList<IDrawShapesStrategy> shapes, Point start, Point end) {
+    public DrawShapeCommand(Graphics2D graphics, IApplicationState appState, ArrayList<Shape> shapes, Point start, Point end) {
         this.graphics = graphics;
         this.appState = appState;
         this.shapes = shapes;
@@ -37,17 +37,20 @@ public class DrawShapeCommand implements ICommand, IUndoable {
 
         // maybe make this a switch statement
         if(shapeConfiguration.shapeType == ShapeType.RECTANGLE){
-            IDrawShapesStrategy rectangle = new Rectangle(graphics, shapeConfiguration, start, end);
-            shapes.add(rectangle);
+            IDrawShapesStrategy rectangle = new Rectangle(graphics, shapes, shapeConfiguration, start, end);
             rectangle.drawShapes();
+            //test
+            System.out.println(shapes.toString());
         } else if(shapeConfiguration.shapeType == ShapeType.ELLIPSE){
-            IDrawShapesStrategy ellipse = new Ellipse(graphics, shapeConfiguration, start, end);
-            shapes.add(ellipse);
+            IDrawShapesStrategy ellipse = new Ellipse(graphics, shapes, shapeConfiguration, start, end);
             ellipse.drawShapes();
+            //test
+            System.out.println(shapes.toString());
         } else if(shapeConfiguration.shapeType == ShapeType.TRIANGLE){
-            IDrawShapesStrategy triangle = new Triangle(graphics, shapeConfiguration, start, end);
-            shapes.add(triangle);
+            IDrawShapesStrategy triangle = new Triangle(graphics, shapes, shapeConfiguration, start, end);
             triangle.drawShapes();
+            //test
+            System.out.println(shapes.toString());
         } else {throw new IOException();}
 
         // add command to CommandHistory

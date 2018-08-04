@@ -6,22 +6,25 @@ import model.shapes.SelectedShapes;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SelectShapesCommand implements ICommand, IUndoable {
 
     private Graphics2D graphics;
+    private ArrayList<Shape> shapes;
     private SelectedShapes selectedShapes;
     private Point start, end;
 
-    public SelectShapesCommand(Graphics2D graphics, SelectedShapes selectedShapes, Point start, Point end){
+    public SelectShapesCommand(Graphics2D graphics, ArrayList<Shape> shapes, SelectedShapes selectedShapes, Point start, Point end){
         this.graphics = graphics;
+        this.shapes = shapes;
         this.selectedShapes = selectedShapes;
         this.start = start;
         this.end = end;
     }
     @Override
     public void run() throws IOException {
-        System.out.println("Made it to SelectShape Command");
+        selectedShapes.addShapes(shapes, start, end);
         
 
         // add command to CommandHistory

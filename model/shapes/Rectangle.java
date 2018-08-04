@@ -7,10 +7,12 @@ import model.ShapeType;
 import model.interfaces.IDrawShapesStrategy;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy {
 
     private Graphics2D graphics;
+    private ArrayList<Shape> shapes;
     private ShapeConfiguration shapeConfiguration;
 
     private ShapeType rectangle;
@@ -23,8 +25,9 @@ public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy
 
     private int x, y, height, width;
 
-    public Rectangle(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end){
+    public Rectangle(Graphics2D graphics, ArrayList<Shape> shapes, ShapeConfiguration shapeConfiguration, Point start, Point end){
         this.graphics = graphics;
+        this.shapes = shapes;
         this.shapeConfiguration = shapeConfiguration;
         this.rectangle = shapeConfiguration.shapeType;
         this.primary = shapeConfiguration.primaryColor;
@@ -38,14 +41,18 @@ public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy
 
     @Override
     public void drawShapes() {
-        graphics.setColor(shapeColorMap.get(shapeConfiguration.primaryColor)); //primary
+        graphics.setColor(shapeColorMap.get(primary)); //primary
         if(shade == ShapeShadingType.FILLED_IN || shade == ShapeShadingType.OUTLINE_AND_FILLED_IN) {
             graphics.fillRect(x, y, width, height);
+            java.awt.Rectangle rectangle = new java.awt.Rectangle(x, y, width, height);
+            shapes.add(rectangle);
         }
         graphics.setStroke(new BasicStroke(5));
-        graphics.setColor(shapeColorMap.get(shapeConfiguration.secondaryColor)); // secondary
+        graphics.setColor(shapeColorMap.get(secondary)); // secondary
         if(shade == ShapeShadingType.OUTLINE || shade == ShapeShadingType.OUTLINE_AND_FILLED_IN) {
             graphics.drawRect(x, y, width, height);
+            java.awt.Rectangle rectangle = new java.awt.Rectangle(x, y, width, height);
+            shapes.add(rectangle);
         }
     }
 }
