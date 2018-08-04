@@ -39,18 +39,12 @@ public class DrawShapeCommand implements ICommand, IUndoable {
         if(shapeConfiguration.shapeType == ShapeType.RECTANGLE){
             IDrawShapesStrategy rectangle = new Rectangle(graphics, shapes, shapeConfiguration, start, end);
             rectangle.drawShapes();
-            //test
-            System.out.println(shapes.toString());
         } else if(shapeConfiguration.shapeType == ShapeType.ELLIPSE){
             IDrawShapesStrategy ellipse = new Ellipse(graphics, shapes, shapeConfiguration, start, end);
             ellipse.drawShapes();
-            //test
-            System.out.println(shapes.toString());
         } else if(shapeConfiguration.shapeType == ShapeType.TRIANGLE){
             IDrawShapesStrategy triangle = new Triangle(graphics, shapes, shapeConfiguration, start, end);
             triangle.drawShapes();
-            //test
-            System.out.println(shapes.toString());
         } else {throw new IOException();}
 
         // add command to CommandHistory

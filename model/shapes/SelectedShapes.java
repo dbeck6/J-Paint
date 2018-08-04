@@ -22,10 +22,11 @@ public class SelectedShapes extends Rectangle implements ISelectShapeIterator {
         int height = Math.abs(start.y - end.y);
         Rectangle rect = new Rectangle(x, y, width, height);
         for(Shape shape: shapes){
-            if (rect.getBounds().intersects(shape.getBounds())){
+            //second part of OR statement may not be necessary
+            if (rect.getBounds().intersects(shape.getBounds()) || shape.contains(x, y)){
                 selectedShapes.add(shape);
-               /* System.out.println("Collected shape");
-                System.out.println(selectedShapes.toString());*/
+               // System.out.println("Collected shape " + shape.toString());
+               // System.out.println(selectedShapes.toString());
             }
         }
     }
