@@ -21,7 +21,7 @@ public class SelectShapesCommand implements ICommand, IUndoable {
     }
     @Override
     public void run() throws IOException {
-        selector();
+            selector();
 
         // add command to CommandHistory though not sure its needed...
         //CommandHistory.add(this);
@@ -38,7 +38,7 @@ public class SelectShapesCommand implements ICommand, IUndoable {
             shapeLists.addShapes(shapeLists.getCurrentShapeList(), start, end);
         } else {
             shapeLists.deselectAllShapes();
-            System.out.println("This is deselect " + shapeLists.getSelectedShapesList().toString());
+            //System.out.println("This is deselect " + shapeLists.getSelectedShapesList().toString());
         }
     }
 }

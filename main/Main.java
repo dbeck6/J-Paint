@@ -4,6 +4,7 @@ import controller.IJPaintController;
 import controller.JPaintController;
 import controller.commands.ClickHandler;
 import model.persistence.ApplicationState;
+import model.shapes.ShapeLists;
 import view.gui.Gui;
 import view.gui.GuiWindow;
 import view.gui.PaintCanvas;
@@ -18,9 +19,10 @@ public class Main {
         IGuiWindow guiWindow = new GuiWindow(canvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
-        ClickHandler clickHandler = new ClickHandler(canvas, appState);
+        ShapeLists masterShapeList = new ShapeLists();
+        ClickHandler clickHandler = new ClickHandler(canvas, appState, masterShapeList);
         (canvas).addMouseListener(clickHandler);
-        IJPaintController controller = new JPaintController(uiModule, appState, clickHandler);
+        IJPaintController controller = new JPaintController(uiModule, appState, masterShapeList);
         controller.setup();
         }
 }

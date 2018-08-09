@@ -42,19 +42,23 @@ public class MoveShapesCommand implements ICommand, IUndoable {
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0,0,1200,800);
 
-        deltaX = (int) (end.getX() + start.getX());
-        deltaY = (int) (end.getY() + start.getY());
+        /*deltaX = (int) (end.getX() + start.getX());
+        deltaY = (int) (end.getY() + start.getY());*/
 
-        /*selectedShapeIterator = shapeLists.createSelectedShapeIterator();
+       /* selectedShapeIterator = shapeLists.createSelectedShapeIterator();
         masterShapeIterator = shapeLists.createCurrentShapeIterator();*/
 
-        undoMove(selectedShapeIterator, masterShapeIterator);
+        undoMove(deltaX, deltaY);
 
     }
 
     @Override
     public void redo() {
-        move();
+        graphics.clearRect(0,0, 1200, 800);
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0,0,1200,800);
+
+        redoMove(deltaX, deltaY);
     }
 
     public void move(){
@@ -87,11 +91,34 @@ public class MoveShapesCommand implements ICommand, IUndoable {
         }
     }
 
-    private void undoMove(Iterator<IDrawShapesStrategy> selectedShapeIterator, Iterator<IDrawShapesStrategy> masterShapeIterator){
+    private void undoMove(int deltaX, int deltaY){
+
+        selectedShapeIterator = shapeLists.createSelectedShapeIterator();
+        masterShapeIterator = shapeLists.createCurrentShapeIterator();
+
         while(selectedShapeIterator.hasNext()) {
             IDrawShapesStrategy temp = selectedShapeIterator.next();
             Point dStart = new Point((int)(temp.getStartPoint().getX() - deltaX), (int)(temp.getStartPoint().getY() - deltaY));
-            Point dEnd = new Point(temp.getCurrentWidth() - (int) dStart.getX(), temp.getCurrentHeight() - (int) dStart.getY());
+            Point dEnd = new Point((int) (temp.getEndPoint().getX() - deltaX), (int) (temp.getEndPoint().getY() - deltaY));
+            temp.setStartAndEndPoint(dStart, dEnd);
+            temp.drawShapes();
+        }
+
+        while (masterShapeIterator.hasNext()){
+            IDrawShapesStrategy curr = masterShapeIterator.next();
+            curr.drawShapes();
+        }
+    }
+
+    private void redoMove(int deltaX, int deltaY){
+
+        selectedShapeIterator = shapeLists.createSelectedShapeIterator();
+        masterShapeIterator = shapeLists.createCurrentShapeIterator();
+
+        while(selectedShapeIterator.hasNext()) {
+            IDrawShapesStrategy temp = selectedShapeIterator.next();
+            Point dStart = new Point((int)(temp.getStartPoint().getX() + deltaX), (int)(temp.getStartPoint().getY() + deltaY));
+            Point dEnd = new Point((int) (temp.getEndPoint().getX() + deltaX), (int) (temp.getEndPoint().getY() + deltaY));
             temp.setStartAndEndPoint(dStart, dEnd);
             temp.drawShapes();
         }

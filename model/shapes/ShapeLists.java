@@ -12,10 +12,12 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator {
 
     private ArrayList<IDrawShapesStrategy> currentShapeList;
     private ArrayList<IDrawShapesStrategy> selectedShapesList;
+    private ArrayList<IDrawShapesStrategy> shapeClipBoard;
 
     public ShapeLists(){
         currentShapeList = new ArrayList<>();
         selectedShapesList = new ArrayList<>();
+        shapeClipBoard = new ArrayList<>();
     }
 
     public void addShapes(ArrayList<IDrawShapesStrategy> shapes, Point start, Point end){
@@ -40,9 +42,17 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator {
 
     }
 
+    public void setShapeClipBoard(){
+        shapeClipBoard = selectedShapesList;
+        System.out.println("ShapeClipBoard is " + selectedShapesList.toString());
+
+    }
+
     public ArrayList<IDrawShapesStrategy> getCurrentShapeList(){ return currentShapeList; }
 
     public ArrayList<IDrawShapesStrategy> getSelectedShapesList(){ return selectedShapesList; }
+
+    public ArrayList<IDrawShapesStrategy> getShapeClipBoard(){return shapeClipBoard;}
 
     public void deselectAllShapes(){
         for(IDrawShapesStrategy shape: selectedShapesList) {
@@ -51,6 +61,11 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator {
         selectedShapesList.removeAll(selectedShapesList);
         System.out.println("Original shapelist " + currentShapeList.toString());
         System.out.println("Selected shapelist " + selectedShapesList.toString());
+    }
+
+    public void clearShapeClipBoard(){
+        shapeClipBoard.removeAll(shapeClipBoard);
+        System.out.println("ShapeClipBoard is " + selectedShapesList.toString());
 
     }
 
@@ -59,4 +74,9 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator {
 
     @Override
     public Iterator<IDrawShapesStrategy> createSelectedShapeIterator() { return selectedShapesList.iterator(); }
+
+    @Override
+    public Iterator<IDrawShapesStrategy> createShapeClipBoardIterator() {
+        return shapeClipBoard.iterator();
+    }
 }

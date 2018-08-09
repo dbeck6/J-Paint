@@ -19,11 +19,12 @@ public class ClickHandler implements MouseListener {
 
     private boolean rightClick = false;
 
-    private ShapeLists masterShapeList = new ShapeLists();
+    private ShapeLists masterShapeList;
 
-    public ClickHandler(PaintCanvas canvas, IApplicationState appState){
+    public ClickHandler(PaintCanvas canvas, IApplicationState appState, ShapeLists masterShapeList){
         this.canvas = canvas;
         this.appState = appState;
+        this.masterShapeList = masterShapeList;
     }
 
     @Override
