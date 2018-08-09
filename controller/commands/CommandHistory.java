@@ -1,6 +1,6 @@
 package controller.commands;
 
-import model.interfaces.IUndoable;
+import controller.IUndoable;
 
 import java.util.Stack;
 

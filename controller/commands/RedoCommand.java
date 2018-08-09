@@ -1,6 +1,6 @@
 package controller.commands;
 
-import model.interfaces.ICommand;
+import controller.ICommand;
 import java.io.IOException;
 
 public class RedoCommand implements ICommand {
