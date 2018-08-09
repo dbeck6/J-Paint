@@ -18,6 +18,8 @@ public class DrawShapeCommand implements ICommand, IUndoable {
     private Point start, end;
     private ShapeConfiguration shapeConfiguration = new ShapeConfiguration();
     private ShapeLists shapeLists;
+    private IDrawShapesStrategy newShape;
+    //private IDrawShapesStrategy undoRedoShape;
 
 
     public DrawShapeCommand(Graphics2D graphics, IApplicationState appState, ShapeLists shapesLists, Point start, Point end) {
@@ -31,7 +33,6 @@ public class DrawShapeCommand implements ICommand, IUndoable {
     @Override
     public void run() throws IOException {
         appState.getCurrentShapeConfiguration(shapeConfiguration);
-        IDrawShapesStrategy newShape;
 
         // maybe make this a switch statement
         if(shapeConfiguration.shapeType == ShapeType.RECTANGLE){
@@ -46,7 +47,7 @@ public class DrawShapeCommand implements ICommand, IUndoable {
         // add newShape to currentShapeList
         shapeLists.getCurrentShapeList().add(newShape);
         // testing...
-        System.out.println(shapeLists.getCurrentShapeList().toString());
+        //System.out.println(shapeLists.getCurrentShapeList().toString());
 
         // add command to CommandHistory
         CommandHistory.add(this);
@@ -54,11 +55,28 @@ public class DrawShapeCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        // needs to destroy shape somehow...
+        // removes the last element of the shape list (most recently drawn shape) AH PROBABLY NEED ANOTHER ARRAYLIST...but maybe not
+        //undoRedoShape = shapeLists.getCurrentShapeList().get(shapeLists.getCurrentShapeList().size()-1);
+        shapeLists.getCurrentShapeList().remove(newShape);
+        //clear canvas
+        graphics.clearRect(0,0, 1200, 800);
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0,0,1200,800);
+        for (IDrawShapesStrategy shape: shapeLists.getCurrentShapeList()){
+            shape.drawShapes();
+        }
     }
 
     @Override
     public void redo() {
-
+        // add newShape back into list
+        shapeLists.getCurrentShapeList().add(newShape);
+        //clear canvas
+        graphics.clearRect(0,0, 1200, 800);
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0,0,1200,800);
+        for (IDrawShapesStrategy shape: shapeLists.getCurrentShapeList()){
+            shape.drawShapes();
+        }
     }
 }

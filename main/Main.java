@@ -18,9 +18,9 @@ public class Main {
         IGuiWindow guiWindow = new GuiWindow(canvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
-        IJPaintController controller = new JPaintController(uiModule, appState);
+        ClickHandler clickHandler = new ClickHandler(canvas, appState);
+        (canvas).addMouseListener(clickHandler);
+        IJPaintController controller = new JPaintController(uiModule, appState, clickHandler);
         controller.setup();
-        // connect ClickHandler to canvas
-        (canvas).addMouseListener(new ClickHandler(canvas, appState));
         }
 }

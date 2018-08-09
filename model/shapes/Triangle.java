@@ -32,8 +32,12 @@ public class Triangle extends Polygon implements IDrawShapesStrategy {
 
     @Override
     public void drawShapes() {
-        int[] xArray = new int[]{start.x, ((start.x + end.x) / 2), end.x};
-        int[] yArray = new int[]{end.y, start.y, end.y};
+        int x = Math.min(start.x, end.x);
+        int y = Math.min(start.y, end.y);
+        int z = Math.max(start.x, end.x);
+        int t = Math.max(start.y, end.y);
+        int[] xArray = new int[]{x, ((x + z) / 2), z};
+        int[] yArray = new int[]{t, y, t};
         Polygon triangle = new Polygon(xArray, yArray, points);
         this.currShape = triangle;
         graphics.setColor(shapeColorMap.get(primary)); //primary
