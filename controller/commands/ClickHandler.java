@@ -54,10 +54,10 @@ public class ClickHandler implements MouseListener {
                 command = new DrawShapeCommand(canvas.getGraphics2D(), appState, masterShapeList, start, end);
                 break;
             case SELECT:
-                command = new SelectShapesCommand(canvas.getGraphics2D(), masterShapeList, start, end);
+                command = new SelectShapesCommand(masterShapeList, start, end);
                 break;
             case MOVE:
-                command = new MoveShapesCommand(canvas.getGraphics2D(), masterShapeList, start, end);
+                command = new MoveShapesCommand(masterShapeList, start, end);
                 break;
             default:
                 throw new Error();

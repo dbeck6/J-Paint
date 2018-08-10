@@ -20,6 +20,8 @@ public class Main {
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
         ShapeLists masterShapeList = new ShapeLists();
+        // don't forget about below
+        masterShapeList.registerObserver(canvas);
         ClickHandler clickHandler = new ClickHandler(canvas, appState, masterShapeList);
         (canvas).addMouseListener(clickHandler);
         IJPaintController controller = new JPaintController(uiModule, appState, masterShapeList);

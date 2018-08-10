@@ -2,17 +2,20 @@ package model.shapes;
 
 import model.interfaces.IDrawShapesStrategy;
 import model.interfaces.ISelectShapeIterator;
+import model.interfaces.IShapeSubject;
+import view.gui.PaintCanvas;
 
 import java.awt.*;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ShapeLists extends Rectangle implements ISelectShapeIterator {
+public class ShapeLists extends Rectangle implements ISelectShapeIterator, IShapeSubject {
 
     private ArrayList<IDrawShapesStrategy> currentShapeList;
     private ArrayList<IDrawShapesStrategy> selectedShapesList;
     private ArrayList<IDrawShapesStrategy> shapeClipBoard;
+    private PaintCanvas canvas;
 
     public ShapeLists(){
         currentShapeList = new ArrayList<>();
@@ -78,5 +81,19 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator {
     @Override
     public Iterator<IDrawShapesStrategy> createShapeClipBoardIterator() {
         return shapeClipBoard.iterator();
+    }
+
+    @Override
+    public void registerObserver(PaintCanvas paintCanvas) {
+        this.canvas = paintCanvas;
+    }
+
+    @Override
+    public void notifyObservers() {
+        canvas.update(currentShapeList, selectedShapesList);
+    }
+
+    public int getShapeIndex(IDrawShapesStrategy shape){
+        return currentShapeList.indexOf(shape);
     }
 }

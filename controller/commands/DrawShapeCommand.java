@@ -1,10 +1,10 @@
 package controller.commands;
 
+import controller.ICommand;
+import controller.IUndoable;
 import model.ShapeType;
 import model.interfaces.IApplicationState;
-import controller.ICommand;
 import model.interfaces.IDrawShapesStrategy;
-import controller.IUndoable;
 import model.shapes.*;
 import model.shapes.Rectangle;
 
@@ -19,8 +19,6 @@ public class DrawShapeCommand implements ICommand, IUndoable {
     private ShapeConfiguration shapeConfiguration = new ShapeConfiguration();
     private ShapeLists shapeLists;
     private IDrawShapesStrategy newShape;
-    //private IDrawShapesStrategy undoRedoShape;
-
 
     public DrawShapeCommand(Graphics2D graphics, IApplicationState appState, ShapeLists shapesLists, Point start, Point end) {
         this.graphics = graphics;
@@ -43,28 +41,20 @@ public class DrawShapeCommand implements ICommand, IUndoable {
             newShape = new Triangle(graphics, shapeConfiguration, start, end);
         } else {throw new IOException();}
 
-        newShape.drawShapes();
         // add newShape to currentShapeList
         shapeLists.getCurrentShapeList().add(newShape);
-        // testing...
-        //System.out.println(shapeLists.getCurrentShapeList().toString());
-
+        shapeLists.notifyObservers();
         // add command to CommandHistory
         CommandHistory.add(this);
     }
 
     @Override
     public void undo() {
-        // removes the last element of the shape list (most recently drawn shape) AH PROBABLY NEED ANOTHER ARRAYLIST...but maybe not
-        //undoRedoShape = shapeLists.getCurrentShapeList().get(shapeLists.getCurrentShapeList().size()-1);
-        shapeLists.getCurrentShapeList().remove(newShape);
+        // removes the last element of the shape list (most recently drawn shape)
+        int index = shapeLists.getCurrentShapeList().lastIndexOf(newShape);
+        shapeLists.getCurrentShapeList().remove(index);
         //clear canvas
-        graphics.clearRect(0,0, 1200, 800);
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(0,0,1200,800);
-        for (IDrawShapesStrategy shape: shapeLists.getCurrentShapeList()){
-            shape.drawShapes();
-        }
+        shapeLists.notifyObservers();
     }
 
     @Override
@@ -72,11 +62,6 @@ public class DrawShapeCommand implements ICommand, IUndoable {
         // add newShape back into list
         shapeLists.getCurrentShapeList().add(newShape);
         //clear canvas
-        graphics.clearRect(0,0, 1200, 800);
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(0,0,1200,800);
-        for (IDrawShapesStrategy shape: shapeLists.getCurrentShapeList()){
-            shape.drawShapes();
-        }
+        shapeLists.notifyObservers();
     }
 }

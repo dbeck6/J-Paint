@@ -9,12 +9,10 @@ import java.io.IOException;
 
 public class SelectShapesCommand implements ICommand, IUndoable {
 
-    private Graphics2D graphics;
     private ShapeLists shapeLists;
     private Point start, end;
 
-    public SelectShapesCommand(Graphics2D graphics, ShapeLists shapeLists, Point start, Point end){
-        this.graphics = graphics;
+    public SelectShapesCommand(ShapeLists shapeLists, Point start, Point end){
         this.shapeLists = shapeLists;
         this.start = start;
         this.end = end;
