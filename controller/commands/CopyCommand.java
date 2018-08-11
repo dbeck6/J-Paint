@@ -23,24 +23,12 @@ public class CopyCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        try {
-            copy();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /*masterShapeList.clearShapeClipBoard();
-        masterShapeList.setCopyReady();*/
+        masterShapeList.clearShapeClipBoard();
     }
 
     @Override
     public void redo() {
-        try {
-            copy();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /*masterShapeList.setShapeClipBoard();
-        masterShapeList.setCopyReady();*/
+        masterShapeList.setShapeClipBoard();
     }
 
     private void copy() throws IOException {

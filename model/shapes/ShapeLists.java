@@ -19,6 +19,7 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator, IShap
     private boolean selectReady = true;
     private boolean copyReady = false;
 
+    //private Stack<ArrayList<IDrawShapesStrategy>> undoSelectStack = new Stack<>();
 
     public ShapeLists(){
         currentShapeList = new ArrayList<>();
@@ -34,7 +35,7 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator, IShap
     public boolean isSelectReady(){return selectReady;}
 
     public void setSelectReady(){selectReady = !selectReady;
-        /*System.out.println(selectReady);*/}
+        System.out.println(selectReady);}
 
     public void addShapes(ArrayList<IDrawShapesStrategy> shapes, Point start, Point end){
         int x = Math.min(start.x, end.x);
@@ -47,21 +48,21 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator, IShap
             Shape s = shape.getShapeParameters();
             if (rect.getBounds().intersects(s.getBounds()) || s.contains(x, y)){
                 selectedShapesList.add(shape);
-                //System.out.println("Collected shape " + shape.getShapeParameters().toString());
+                System.out.println("Collected shape " + shape.getShapeParameters().toString());
             }
         }
         // remove selected shapes from currentShapeList
         for (IDrawShapesStrategy shape: selectedShapesList) {
             Shape finalS = shape.getShapeParameters();
             currentShapeList.removeIf((IDrawShapesStrategy i) -> i.getShapeParameters() == finalS);
-            //System.out.println("Removed shape from master " + shape.getShapeParameters().toString());
+            System.out.println("Removed shape from master " + shape.getShapeParameters().toString());
         }
+        setSelectReady();
+
+        //undoSelectStack.push(selectedShapesList);
     }
 
     public void setShapeClipBoard(){
-        /*for (IDrawShapesStrategy shape: selectedShapesList) {
-            shapeClipBoard.add(shape);
-        }*/
         shapeClipBoard.addAll(selectedShapesList);
         setCopyReady();
         //deselectAllShapes();
@@ -76,18 +77,23 @@ public class ShapeLists extends Rectangle implements ISelectShapeIterator, IShap
 
     public ArrayList<IDrawShapesStrategy> getShapeClipBoard(){return shapeClipBoard;}
 
+   // public Stack<ArrayList<IDrawShapesStrategy>> getUndoSelectStack(){return undoSelectStack;}
+
     public void deselectAllShapes(){
+        //undoSelectStack.push(selectedShapesList);
+
         currentShapeList.addAll(selectedShapesList);
         selectedShapesList.clear();
-        /*System.out.println("Original shapelist " + currentShapeList.toString());
-        System.out.println("Selected shapelist " + selectedShapesList.toString());*/
+        setSelectReady();
+        System.out.println("Original shapelist " + currentShapeList.toString());
+        System.out.println("Selected shapelist " + selectedShapesList.toString());
     }
 
     public void clearShapeClipBoard(){
         shapeClipBoard.clear();
         setCopyReady();
-        /*System.out.println("ShapeClipBoard is " + shapeClipBoard.toString());
-        System.out.println("Selected shapelist " + selectedShapesList.toString());*/
+        System.out.println("ShapeClipBoard is " + shapeClipBoard.toString());
+        System.out.println("Selected shapelist " + selectedShapesList.toString());
     }
 
     @Override

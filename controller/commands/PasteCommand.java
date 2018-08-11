@@ -61,7 +61,7 @@ public class PasteCommand implements ICommand, IUndoable {
            deltaX = rand.nextInt(300) + 50;
            deltaY = rand.nextInt(300) + 50;
 
-           System.out.println("deltaX = "+ deltaX + " deltaY = "+ deltaY);
+           //System.out.println("deltaX = "+ deltaX + " deltaY = "+ deltaY);
 
             for (IDrawShapesStrategy paste: clipBoard) {
                 masterShapeList.getCurrentShapeList().add(paste);

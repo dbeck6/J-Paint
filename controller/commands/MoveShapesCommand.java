@@ -44,7 +44,7 @@ public class MoveShapesCommand implements ICommand, IUndoable {
         redoMove(deltaX, deltaY);
     }
 
-    public void move(){
+    private void move(){
 
         deltaX = (int) (end.getX() - start.getX());
         deltaY = (int) (end.getY() - start.getY());
