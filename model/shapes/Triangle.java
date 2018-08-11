@@ -80,4 +80,15 @@ public class Triangle extends Polygon implements IDrawShapesStrategy {
     public int getCurrentHeight() {
         return Math.abs(start.y - end.y);
     }
+
+    @Override
+    public IDrawShapesStrategy clone(){
+        IDrawShapesStrategy clone;
+        try{
+            clone = (IDrawShapesStrategy) super.clone();
+        }catch(CloneNotSupportedException e){
+            throw new RuntimeException(e); // won't happen
+        }
+        return clone;
+    }
 }

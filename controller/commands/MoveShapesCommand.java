@@ -1,8 +1,8 @@
 package controller.commands;
 
 import controller.ICommand;
-import model.interfaces.IDrawShapesStrategy;
 import controller.IUndoable;
+import model.interfaces.IDrawShapesStrategy;
 import model.shapes.ShapeLists;
 
 import java.awt.*;
@@ -15,8 +15,7 @@ public class MoveShapesCommand implements ICommand, IUndoable {
     private Point start, end;
     private int deltaX, deltaY;
 
-    private Iterator <IDrawShapesStrategy> selectedShapeIterator;
-    private Iterator<IDrawShapesStrategy> masterShapeIterator;
+    private Iterator<IDrawShapesStrategy> selectedShapeIterator;
 
     public MoveShapesCommand(ShapeLists shapeLists, Point start, Point end) {
         this.shapeLists = shapeLists;
@@ -51,12 +50,13 @@ public class MoveShapesCommand implements ICommand, IUndoable {
         deltaY = (int) (end.getY() - start.getY());
 
         selectedShapeIterator = shapeLists.createSelectedShapeIterator();
-        masterShapeIterator = shapeLists.createCurrentShapeIterator();
 
-        move(selectedShapeIterator, masterShapeIterator);
+        // add a cloneable ArrayList to help multiple moves?
+
+        move(selectedShapeIterator);
     }
 
-    private void move(Iterator<IDrawShapesStrategy> selectedShapeIterator, Iterator<IDrawShapesStrategy> masterShapeIterator){
+    private void move(Iterator<IDrawShapesStrategy> selectedShapeIterator){
         while(selectedShapeIterator.hasNext()) {
             IDrawShapesStrategy temp = selectedShapeIterator.next();
             Point dStart = new Point((int)(temp.getStartPoint().getX() + deltaX), (int)(temp.getStartPoint().getY() + deltaY));
@@ -68,8 +68,8 @@ public class MoveShapesCommand implements ICommand, IUndoable {
 
     private void undoMove(int deltaX, int deltaY){
 
+
         selectedShapeIterator = shapeLists.createSelectedShapeIterator();
-        masterShapeIterator = shapeLists.createCurrentShapeIterator();
 
         while(selectedShapeIterator.hasNext()) {
             IDrawShapesStrategy temp = selectedShapeIterator.next();
@@ -83,7 +83,6 @@ public class MoveShapesCommand implements ICommand, IUndoable {
     private void redoMove(int deltaX, int deltaY){
 
         selectedShapeIterator = shapeLists.createSelectedShapeIterator();
-        masterShapeIterator = shapeLists.createCurrentShapeIterator();
 
         while(selectedShapeIterator.hasNext()) {
             IDrawShapesStrategy temp = selectedShapeIterator.next();

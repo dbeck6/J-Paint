@@ -50,9 +50,8 @@ public class DrawShapeCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        // removes the last element of the shape list (most recently drawn shape)
-        int index = shapeLists.getCurrentShapeList().lastIndexOf(newShape);
-        shapeLists.getCurrentShapeList().remove(index);
+        Shape finalS = newShape.getShapeParameters();
+        shapeLists.getCurrentShapeList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters() == finalS);
         //clear canvas
         shapeLists.notifyObservers();
     }

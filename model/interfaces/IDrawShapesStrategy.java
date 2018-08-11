@@ -2,7 +2,7 @@ package model.interfaces;
 
 import java.awt.*;
 
-public interface IDrawShapesStrategy extends Shape {
+public interface IDrawShapesStrategy extends Shape, Cloneable {
     void drawShapes();
     Shape getShapeParameters();
     Point getStartPoint();
@@ -10,5 +10,5 @@ public interface IDrawShapesStrategy extends Shape {
     void setStartAndEndPoint(Point start, Point end);
     int getCurrentWidth();
     int getCurrentHeight();
-
+    IDrawShapesStrategy clone();
 }

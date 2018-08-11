@@ -19,24 +19,41 @@ public class SelectShapesCommand implements ICommand, IUndoable {
     }
     @Override
     public void run() throws IOException {
-            selector();
+        selector();
 
         // add command to CommandHistory though not sure its needed...
-        //CommandHistory.add(this);
+        CommandHistory.add(this);
     }
 
     @Override
-    public void undo() {}
+    public void undo() {
+        try {
+            selector();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Selected list " + shapeLists.getSelectedShapesList().toString());
+        System.out.println("Current list " + shapeLists.getCurrentShapeList().toString());
+    }
 
     @Override
-    public void redo() {}
-
-    public void selector(){
-        if(shapeLists.getSelectedShapesList().isEmpty()){
-            shapeLists.addShapes(shapeLists.getCurrentShapeList(), start, end);
-        } else {
-            shapeLists.deselectAllShapes();
-            //System.out.println("This is deselect " + shapeLists.getSelectedShapesList().toString());
+    public void redo() {
+        try {
+            selector();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        System.out.println("Selected list " + shapeLists.getSelectedShapesList().toString());
+        System.out.println("Current list " + shapeLists.getCurrentShapeList().toString());
+    }
+
+    public void selector() throws IOException {
+        if(shapeLists.isSelectReady()){
+            shapeLists.addShapes(shapeLists.getCurrentShapeList(), start, end);
+            shapeLists.setSelectReady();
+        } else if (!shapeLists.isSelectReady()) {
+            shapeLists.deselectAllShapes();
+            shapeLists.setSelectReady();
+        } else throw new IOException();
     }
 }

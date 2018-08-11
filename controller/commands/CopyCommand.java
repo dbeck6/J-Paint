@@ -2,17 +2,13 @@ package controller.commands;
 
 import controller.ICommand;
 import controller.IUndoable;
-import model.interfaces.IDrawShapesStrategy;
 import model.shapes.ShapeLists;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CopyCommand implements ICommand, IUndoable {
 
     private ShapeLists masterShapeList;
-    private ArrayList<IDrawShapesStrategy> clipBoard;
-
 
     public CopyCommand(ShapeLists masterShapeList) {
         this.masterShapeList = masterShapeList;
@@ -22,24 +18,36 @@ public class CopyCommand implements ICommand, IUndoable {
     public void run() throws IOException {
         copy();
 
-        // add command to CommandHistory
         CommandHistory.add(this);
     }
 
     @Override
     public void undo() {
-        masterShapeList.clearShapeClipBoard();
-        clipBoard = masterShapeList.getShapeClipBoard();
-
+        try {
+            copy();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*masterShapeList.clearShapeClipBoard();
+        masterShapeList.setCopyReady();*/
     }
 
     @Override
     public void redo() {
-        copy();
+        try {
+            copy();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*masterShapeList.setShapeClipBoard();
+        masterShapeList.setCopyReady();*/
     }
 
-    private void copy() {
-           masterShapeList.setShapeClipBoard();
-           clipBoard = masterShapeList.getShapeClipBoard();
+    private void copy() throws IOException {
+        if(!masterShapeList.isCopyReady()) {
+            masterShapeList.setShapeClipBoard();
+        }else if(masterShapeList.isCopyReady()){
+            masterShapeList.clearShapeClipBoard();
+        }else throw new IOException();
     }
 }

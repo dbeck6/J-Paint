@@ -77,4 +77,11 @@ public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy
     public int getCurrentHeight() {
         return Math.abs(start.y - end.y);
     }
+
+    @Override
+    public IDrawShapesStrategy clone() {
+        IDrawShapesStrategy clone;
+        clone = (IDrawShapesStrategy) super.clone();
+        return clone;
+    }
 }
