@@ -11,6 +11,7 @@ public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy
 
     private Graphics2D graphics;
     private Shape currShape;
+    private ShapeConfiguration shapeConfiguration;
     private ShapeColor primary;
     private ShapeColor secondary;
     private ShapeShadingType shade;
@@ -22,6 +23,7 @@ public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy
 
     public Rectangle(Graphics2D graphics, ShapeConfiguration shapeConfiguration, Point start, Point end) {
         this.graphics = graphics;
+        this.shapeConfiguration = shapeConfiguration;
         this.primary = shapeConfiguration.primaryColor;
         this.secondary = shapeConfiguration.secondaryColor;
         this.shade = shapeConfiguration.shapeShadingType;
@@ -76,6 +78,20 @@ public class Rectangle extends java.awt.Rectangle implements IDrawShapesStrategy
     @Override
     public int getCurrentHeight() {
         return Math.abs(start.y - end.y);
+    }
+
+    @Override
+    public void getOldShapeConfiguration() {
+        this.primary = shapeConfiguration.primaryColor;
+        this.secondary = shapeConfiguration.secondaryColor;
+        this.shade = shapeConfiguration.shapeShadingType;
+    }
+
+    @Override
+    public void setNewShapeConfiguration(ShapeConfiguration shapeConfiguration) {
+        this.primary = shapeConfiguration.primaryColor;
+        this.secondary = shapeConfiguration.secondaryColor;
+        this.shade = shapeConfiguration.shapeShadingType;
     }
 
     @Override

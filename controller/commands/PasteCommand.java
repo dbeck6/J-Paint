@@ -24,7 +24,6 @@ public class PasteCommand implements ICommand, IUndoable {
     @Override
     public void run() throws IOException {
         paste();
-
         // add command to CommandHistory
         CommandHistory.add(this);
     }
@@ -33,7 +32,7 @@ public class PasteCommand implements ICommand, IUndoable {
     public void undo() {
         for (IDrawShapesStrategy paste: clipBoard) {
             Shape finalS = paste.getShapeParameters();
-            masterShapeList.getCurrentShapeList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters() == finalS);
+            masterShapeList.getCurrentShapeList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters().equals(finalS));
         }
         masterShapeList.notifyObservers();
     }
@@ -57,11 +56,10 @@ public class PasteCommand implements ICommand, IUndoable {
                clipBoard.add(clipBoardIterator.next().clone());
            }
 
+           //create random coordinates for new paste shape
            Random rand = new Random();
            deltaX = rand.nextInt(300) + 50;
            deltaY = rand.nextInt(300) + 50;
-
-           //System.out.println("deltaX = "+ deltaX + " deltaY = "+ deltaY);
 
             for (IDrawShapesStrategy paste: clipBoard) {
                 masterShapeList.getCurrentShapeList().add(paste);

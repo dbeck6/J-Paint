@@ -22,7 +22,6 @@ public class DeleteCommand implements ICommand, IUndoable {
     @Override
     public void run() throws IOException {
         delete();
-
         // add command to CommandHistory
         CommandHistory.add(this);
     }
@@ -40,7 +39,7 @@ public class DeleteCommand implements ICommand, IUndoable {
     public void redo() {
         for (IDrawShapesStrategy delete: deletedShapes) {
             Shape finalS = delete.getShapeParameters();
-            masterShapeList.getSelectedShapesList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters() == finalS);
+            masterShapeList.getSelectedShapesList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters().equals(finalS));
         }
         masterShapeList.setSelectReady();
         masterShapeList.notifyObservers();
@@ -48,7 +47,6 @@ public class DeleteCommand implements ICommand, IUndoable {
 
     private void delete(){
         if(!masterShapeList.isSelectReady()) {
-            System.out.println("reached delete command");
 
             deletedShapes = new ArrayList<>(masterShapeList.getSelectedShapesList().size());
             Iterator<IDrawShapesStrategy> deleteShapesIterator = masterShapeList.createSelectedShapeIterator();
@@ -60,7 +58,7 @@ public class DeleteCommand implements ICommand, IUndoable {
 
             for (IDrawShapesStrategy delete : deletedShapes) {
                 Shape finalS = delete.getShapeParameters();
-                masterShapeList.getSelectedShapesList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters() == finalS);
+                masterShapeList.getSelectedShapesList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters().equals(finalS));
             }
             masterShapeList.setSelectReady();
             masterShapeList.notifyObservers();

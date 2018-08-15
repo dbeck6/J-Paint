@@ -51,7 +51,7 @@ public class DrawShapeCommand implements ICommand, IUndoable {
     @Override
     public void undo() {
         Shape finalS = newShape.getShapeParameters();
-        shapeLists.getCurrentShapeList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters() == finalS);
+        shapeLists.getCurrentShapeList().removeIf((IDrawShapesStrategy i) -> i.getShapeParameters().equals(finalS));
         //clear canvas
         shapeLists.notifyObservers();
     }

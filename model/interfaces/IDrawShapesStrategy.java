@@ -1,5 +1,7 @@
 package model.interfaces;
 
+import model.shapes.ShapeConfiguration;
+
 import java.awt.*;
 
 public interface IDrawShapesStrategy extends Shape, Cloneable {
@@ -10,5 +12,7 @@ public interface IDrawShapesStrategy extends Shape, Cloneable {
     void setStartAndEndPoint(Point start, Point end);
     int getCurrentWidth();
     int getCurrentHeight();
+    void getOldShapeConfiguration();
+    void setNewShapeConfiguration(ShapeConfiguration shapeConfiguration);
     IDrawShapesStrategy clone();
 }

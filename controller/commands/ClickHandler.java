@@ -1,7 +1,8 @@
 package controller.commands;
 
-import model.interfaces.IApplicationState;
 import controller.ICommand;
+import model.StartAndEndPointMode;
+import model.interfaces.IApplicationState;
 import model.shapes.ShapeLists;
 import view.gui.PaintCanvas;
 
@@ -34,26 +35,30 @@ public class ClickHandler implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         // check if right mouse button was used to inverse colors
-        if(e.getButton() == MouseEvent.BUTTON3 && rightClick == false) {
+        if(e.getButton() == MouseEvent.BUTTON3 && !rightClick && appState.getActiveStartAndEndPointMode() == StartAndEndPointMode.DRAW) {
             // inverse the colors...
             appState.setInverseColors();
             rightClick = true;
         // set them back to original selection if left click was used after right click
-        } else if(e.getButton() == MouseEvent.BUTTON1 && rightClick == true){
+        } else if(e.getButton() == MouseEvent.BUTTON1 && rightClick && appState.getActiveStartAndEndPointMode() == StartAndEndPointMode.DRAW){
             appState.setInverseColors();
             rightClick = false;
         }
-        this.start = new Point(e.getX(), e.getY());  }
+        this.start = e.getPoint();  }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        this.end = new Point(e.getX(), e.getY());
+        this.end = e.getPoint();
 
         switch (appState.getActiveStartAndEndPointMode()){
             case DRAW:
                 command = new DrawShapeCommand(canvas.getGraphics2D(), appState, masterShapeList, start, end);
                 break;
             case SELECT:
+                // if shapes have been selected, right mouse click will change the shape parameters
+                if(e.getButton() == MouseEvent.BUTTON3 && !masterShapeList.isSelectReady()){
+                    command = new ChangeSelectedShapesCommand(appState, masterShapeList);
+                } else
                 command = new SelectShapesCommand(masterShapeList, start, end);
                 break;
             case MOVE:
